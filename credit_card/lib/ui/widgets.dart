@@ -16,12 +16,16 @@ class CreditCardButton extends StatefulWidget {
   final Function onPressed;
   final Text textContent;
   final ButtonStyle style;
+  final double width;
+  final double height;
 
   const CreditCardButton(
       {Key key,
       @required this.onPressed,
       @required this.textContent,
-      @required this.style})
+      @required this.style,
+      @required this.width,
+      @required this.height})
       : super(key: key);
 
   @override
@@ -31,11 +35,15 @@ class CreditCardButton extends StatefulWidget {
 class _CreditCardButtonState extends State<CreditCardButton> {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: widget.onPressed,
-      child: widget.textContent,
-      style: widget.style,
-      autofocus: true,
+    return SizedBox(
+      width: widget.width,
+      height: widget.height,
+      child: ElevatedButton(
+        onPressed: widget.onPressed,
+        child: widget.textContent,
+        style: widget.style,
+        autofocus: true,
+      ),
     );
   }
 }

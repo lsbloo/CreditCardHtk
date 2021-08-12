@@ -277,19 +277,17 @@ class _CreditCardHtkState extends State<CreditCardHtk>
                   SizedBox(
                     height: 18,
                   ),
-                  SizedBox(
-                    width: 400,
+                  CreditCardButton(
+                    width: 450,
                     height: 50,
-                    child: CreditCardButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.green,
-                          textStyle: const TextStyle(fontSize: 20)),
-                      textContent: Text("Salvar"),
-                      onPressed: () {
-                        pressedButton();
-                      },
-                    ),
-                  )
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.green,
+                        textStyle: const TextStyle(fontSize: 20)),
+                    textContent: Text("Salvar"),
+                    onPressed: () {
+                      pressedButton();
+                    },
+                  ),
                 ],
               ),
             )
