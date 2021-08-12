@@ -1,10 +1,13 @@
+Componente de Cartão de Crédito 💳
+====
+<p> 
+   Componente customizavel de cartão de crédito, fornece uma serie de recursos para melhorar a apresentação visual do componente e possui uma serie de regras aplicadas ao número do cartão de crédito. O componente sabe diferenciar os cartões de acordo com a sua bandeira e possui flexibidade para alteração de configurações.      
+</p>
+
 ## Table of content
 - [Iniciando...]
 - [Depedências]
-- [Variáveis de Ambiente]
-- [Como Executar]
-- [Exemplo Manual]
-- [Gráfico Fitness]
+- [Estrutura de Modulos]
 
 ## Iniciando...
 
@@ -12,9 +15,7 @@ Essas instruções fornecerão uma cópia do projeto em execução na sua máqui
 
 ### Como Executar
          
-### Exemplo Manual
+### Estrutura de Modulos
 ![Screenshot](modulos.png 'Modulos')
 
 ### Gráfico Fitness
-
-![Screenshot](grafico.jpg 'Gráfico')
