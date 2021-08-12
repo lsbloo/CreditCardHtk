@@ -6,16 +6,17 @@ Componente de Cartão de Crédito 💳
 
 ## Table of content
 - [Iniciando...]
-- [Depedências]
+- [Como Usar]
 - [Estrutura de Modulos]
+- [GIFS]
 
 ## Iniciando...
 
 Essas instruções fornecerão uma cópia do projeto em execução na sua máquina local para fins de desenvolvimento e teste.
 
-### Como Executar
+### Como Usar
          
 ### Estrutura de Modulos
 ![Screenshot](modulos.png 'Modulos')
 
-### Gráfico Fitness
+### GIFS
