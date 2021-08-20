@@ -14,6 +14,8 @@ Componente de Cartão de Crédito 💳
 
 Essas instruções fornecerão uma cópia do projeto em execução na sua máquina local para fins de desenvolvimento e teste.
 
+![2014-10-22 11_35_09](https://gfycat.com/faroffimmenselabradorretriever.gif) 
+
 ### Como Usar
          
 ### Estrutura de Modulos
