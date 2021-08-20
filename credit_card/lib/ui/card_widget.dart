@@ -1,4 +1,3 @@
-
 import 'package:credit_card/core/utils/validators/masked_text.dart';
 import 'package:credit_card/ui/widgets.dart';
 import 'package:credit_card/core/base/credit_card_htk.dart';
@@ -22,22 +21,31 @@ class CreditCardHtk extends StatefulWidget {
   final String textActionDefaultSnackBarFailure;
   final Color colorGradientOne;
   final Color colorGradentTwo;
+  final Text labelPressedButton;
+  final Color colorPressedButton;
+  final Text textValidatorFields;
+  final String textButtonValidatorFields;
+  final Widget customFailureSnackBar;
   final Function(String numberCard, String nameCard, String dateCard,
       String cvv, String cpf) onPressedButton;
 
-  CreditCardHtk(
-      {@required this.labelTextNumberCard,
-      @required this.labelTextNameCard,
-      @required this.labelDateCard,
-      @required this.labelCvv,
-      @required this.colorGradentTwo,
-      @required this.colorGradientOne,
-      @required this.onPressedButton,
-      @required this.enableCpf,
-      this.dialogInvalidNumberCard,
-      this.labelCPF,
-      this.textContentDefaultSnackBarFailure,
-      this.textActionDefaultSnackBarFailure});
+  CreditCardHtk({@required this.labelTextNumberCard,
+    @required this.labelTextNameCard,
+    @required this.labelDateCard,
+    @required this.labelCvv,
+    @required this.colorGradentTwo,
+    @required this.colorGradientOne,
+    @required this.onPressedButton,
+    @required this.enableCpf,
+    @required this.labelPressedButton,
+    @required this.colorPressedButton,
+    @required this.textValidatorFields,
+    @required this.textButtonValidatorFields,
+    this.customFailureSnackBar,
+    this.dialogInvalidNumberCard,
+    this.labelCPF,
+    this.textContentDefaultSnackBarFailure,
+    this.textActionDefaultSnackBarFailure});
 
   @override
   _CreditCardHtkState createState() => _CreditCardHtkState();
@@ -49,6 +57,7 @@ class _CreditCardHtkState extends State<CreditCardHtk>
   TextEditingController _controllerNameCard;
   TextEditingController _controllerDateExpire;
   TextEditingController _controllerCVV;
+  TextEditingController _controllerCpf;
   CreditCardHtkActionInputValidator validatorInput;
   String _textNumberCard = "";
   String _textInitalValueNumberCard = CreditCardText.TEXT_DEFAULT_NUMBER_CARD;
@@ -106,12 +115,15 @@ class _CreditCardHtkState extends State<CreditCardHtk>
                             Padding(
                                 padding: EdgeInsets.only(
                                     left:
-                                        MediaQuery.of(context).size.width - 80,
+                                    MediaQuery
+                                        .of(context)
+                                        .size
+                                        .width - 80,
                                     top: 20),
                                 child: _imageCard == null
                                     ? Container(
-                                        height: 40,
-                                      )
+                                  height: 40,
+                                )
                                     : _imageCard),
                             Padding(
                               padding: EdgeInsets.all(10),
@@ -121,7 +133,7 @@ class _CreditCardHtkState extends State<CreditCardHtk>
                                   children: [
                                     Text(
                                       _textNumberCard.isEmpty ||
-                                              _controllerNumberCard == null
+                                          _controllerNumberCard == null
                                           ? _textInitalValueNumberCard
                                           : _textNumberCard,
                                       style: TextStyle(
@@ -219,7 +231,9 @@ class _CreditCardHtkState extends State<CreditCardHtk>
                           maxLength: 5,
                           inputDecoration: InputDecoration(
                               labelText: widget.labelDateCard,
-                              suffixIcon: _controllerDateExpire.text.isEmpty ? null : IconButton(
+                              suffixIcon: _controllerDateExpire.text.isEmpty
+                                  ? null
+                                  : IconButton(
                                 onPressed: _controllerDateExpire.clear,
                                 icon: Icon(Icons.clear),
                               ),
@@ -264,6 +278,7 @@ class _CreditCardHtkState extends State<CreditCardHtk>
                   Visibility(
                     visible: widget.enableCpf,
                     child: TextField(
+                      controller: _controllerCpf,
                       decoration: InputDecoration(
                           labelText: widget.labelCPF,
                           labelStyle: TextStyle(
@@ -283,9 +298,9 @@ class _CreditCardHtkState extends State<CreditCardHtk>
                     width: 450,
                     height: 50,
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.green,
+                        primary: widget.colorPressedButton,
                         textStyle: const TextStyle(fontSize: 20)),
-                    textContent: Text("Salvar"),
+                    textContent: widget.labelPressedButton,
                     onPressed: () {
                       pressedButton();
                     },
@@ -327,7 +342,9 @@ class _CreditCardHtkState extends State<CreditCardHtk>
   @override
   String onChangeCardHolder() {
     setState(() {
-      _textCardHolder = _controllerNameCard.text.toString().length != 0
+      _textCardHolder = _controllerNameCard.text
+          .toString()
+          .length != 0
           ? _controllerNameCard.text
           : CreditCardText.TEXT_DEFAULT_CARD_HOLDER;
     });
@@ -337,7 +354,9 @@ class _CreditCardHtkState extends State<CreditCardHtk>
   @override
   void onChangeDateExpire() {
     setState(() {
-      _textDateCard = _controllerDateExpire.text.toString().length != 0
+      _textDateCard = _controllerDateExpire.text
+          .toString()
+          .length != 0
           ? _controllerDateExpire.text
           : CreditCardText.TEXT_DATE_CARD;
     });
@@ -368,6 +387,7 @@ class _CreditCardHtkState extends State<CreditCardHtk>
     _controllerNameCard = new TextEditingController();
     _controllerDateExpire = new TextEditingController();
     _controllerCVV = new TextEditingController();
+    _controllerCpf = widget.enableCpf ? new TextEditingController() : null;
   }
 
   @override
@@ -376,6 +396,7 @@ class _CreditCardHtkState extends State<CreditCardHtk>
     _controllerNameCard.dispose();
     _controllerDateExpire.dispose();
     _controllerCVV.dispose();
+    _controllerCpf != null ? dispose() : null;
   }
 
   Widget _getMasterCardImage() {
@@ -445,6 +466,48 @@ class _CreditCardHtkState extends State<CreditCardHtk>
 
   @override
   void pressedButton() {
-    // TODO: implement pressedButton sender all informations textfield to widget.pressedButton
+    try {
+      bool resultValidator = widget.enableCpf
+          ? ValidatorInput.validatorPressedButtonInput(
+          _controllerNumberCard.text,
+          _controllerNameCard.text,
+          _controllerDateExpire.text,
+          _controllerCVV.text,
+          cpf: _controllerCpf.text)
+          : ValidatorInput.validatorPressedButtonInput(
+          _controllerNumberCard.text,
+          _controllerNameCard.text,
+          _controllerDateExpire.text,
+          _controllerCVV.text);
+
+      if (resultValidator) {
+        widget.onPressedButton(
+            _controllerNumberCard.text,
+            _controllerNameCard.text,
+            _controllerDateExpire.text,
+            _controllerCVV.text,
+            _controllerCpf != null ? _controllerCpf.text : "");
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(_showFailureSnackBar());
+      }
+    } on Exception catch (_) {
+      ScaffoldMessenger.of(context).showSnackBar(_showFailureSnackBar());
+    }
+  }
+
+  void _clearDate() {
+    setState(() {
+      _controllerNumberCard.clear();
+      _controllerNameCard.clear();
+      _controllerDateExpire.clear();
+      _controllerCVV.clear();
+      if (_controllerCpf != null) _controllerCpf.clear();
+    });
+  }
+
+  Widget _showFailureSnackBar(){
+    return widget.customFailureSnackBar != null ?  widget.customFailureSnackBar : FailureSnackBar(widget.textValidatorFields, () {
+      _clearDate();
+    }, widget.textButtonValidatorFields);
   }
 }

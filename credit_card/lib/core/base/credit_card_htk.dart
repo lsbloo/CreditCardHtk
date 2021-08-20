@@ -22,4 +22,5 @@ abstract class CreditCardHtkActionInputValidator {
   Map<String, bool> validateInputNumberCard(String input);
 
   CardType getCardTypeFormNumber(String input);
+
 }

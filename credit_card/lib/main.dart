@@ -28,9 +28,14 @@ class MyApp extends StatelessWidget {
             labelTextNumberCard: "Número do cartão",
             labelCPF: "Cpf do Titular",
             enableCpf: false,
+            labelPressedButton: Text("Salvar"),
+            colorPressedButton: Colors.green,
+            textValidatorFields: Text("Preencha os dados!"),
+            textButtonValidatorFields: "Limpar",
             colorGradentTwo: CreditCardColor.qreyBold,
             colorGradientOne: CreditCardColor.greySemiBold,
             onPressedButton: (numberCard,nameCard,dateCard,cvv,cpf){
+              print(numberCard);
 
             },
           )),
