@@ -11,11 +11,11 @@ Componente de Cartão de Crédito 💳
 - [GIFS]
 
 ## Iniciando...
+Faça uma copia do projeto e em seguida localize o arquivo main.dart, localize o widget CreditCardHtk ele ja esta com uma configuração default; Execute o projeto;
 
-Essas instruções fornecerão uma cópia do projeto em execução na sua máquina local para fins de desenvolvimento e teste.
+### Como Usar o Widget;
 
-
-### Como Usar
+Para utilizar o CreditCardHtk você deve criar uma instancia do mesmo dentro de um Scaffold - sim, internamente é utilizado o Scaffold para exibir algumas mensagens customizaveis.
          
 ### Estrutura de Modulos
 ![Screenshot](modulos.png 'Modulos')
