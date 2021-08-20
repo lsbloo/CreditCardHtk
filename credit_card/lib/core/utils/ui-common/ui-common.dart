@@ -11,5 +11,6 @@ class CreditCardText {
   static String TEXT_ACTION_SNACK_BAR_FAILURE = "Limpar";
   static String TEXT_DEFAULT_NUMBER_CARD = "XXXX XXXX XXXX XXXX";
   static String TEXT_DEFAULT_CARD_HOLDER = "CARD HOLDER";
+  static String TEXT_DEFAULT_CVV = "XXX";
   static String TEXT_DATE_CARD = "MM/YY";
 }
