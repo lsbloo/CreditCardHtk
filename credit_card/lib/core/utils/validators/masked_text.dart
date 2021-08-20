@@ -1,6 +1,7 @@
 library masked_text;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class MaskedTextField extends StatefulWidget {
   final TextEditingController maskedTextFieldController;
@@ -12,7 +13,7 @@ class MaskedTextField extends StatefulWidget {
   final TextInputType keyboardType;
   final InputDecoration inputDecoration;
   final FocusNode focusNode;
-
+  final List<TextInputFormatter> inputFormatter;
   final ValueChanged<String> onChange;
 
   const MaskedTextField(
@@ -24,7 +25,8 @@ class MaskedTextField extends StatefulWidget {
       this.inputDecoration: const InputDecoration(),
       this.focusNode,
       this.onChange,
-        @required this.onTap
+        @required this.onTap,
+        this.inputFormatter
       });
 
   @override
@@ -43,6 +45,7 @@ class _MaskedTextFieldState extends State<MaskedTextField> {
       onTap: widget.onTap,
       decoration: widget.inputDecoration,
       focusNode: widget.focusNode,
+      inputFormatters: widget.inputFormatter,
       onChanged: (String text) {
         // its deleting text
         if (text.length < lastTextSize) {

@@ -177,7 +177,7 @@ class _CreditCardHtkState extends State<CreditCardHtk>
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 40),
+                        padding: EdgeInsets.only(left: 40, bottom: 20),
                         child: Container(
                           width: 130,
                           child: TextField(
@@ -187,7 +187,26 @@ class _CreditCardHtkState extends State<CreditCardHtk>
                               LengthLimitingTextInputFormatter(3)
                             ],
                             onTap: () {
-                              _animateSecondCard();
+                              if (_textNumberCard.length >= 16) {
+                                _animateSecondCard();
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(FailureSnackBar(
+                                    Text(widget.textContentDefaultSnackBarFailure !=
+                                            null
+                                        ? widget
+                                            .textContentDefaultSnackBarFailure
+                                        : CreditCardText
+                                            .TEXT_CONTENT_SNACK_BAR_FAILURE),
+                                    () {
+                                  onClearNumberCard();
+                                },
+                                    widget.textActionDefaultSnackBarFailure !=
+                                            null
+                                        ? widget
+                                            .textActionDefaultSnackBarFailure
+                                        : CreditCardText
+                                            .TEXT_ACTION_SNACK_BAR_FAILURE));
+                              }
                             },
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
@@ -210,9 +229,12 @@ class _CreditCardHtkState extends State<CreditCardHtk>
                   ),
                   Visibility(
                     visible: widget.enableCpf,
-                    child: TextField(
-                      controller: _controllerCpf,
-                      decoration: InputDecoration(
+                    child: MaskedTextField(
+                      maskedTextFieldController: _controllerCpf,
+                      mask: "xxx.xxx.xxx-xx",
+                      maxLength: 14,
+                      keyboardType: TextInputType.number,
+                      inputDecoration: InputDecoration(
                           labelText: widget.labelCPF,
                           labelStyle: TextStyle(
                               color: Colors.black,
@@ -443,7 +465,7 @@ class _CreditCardHtkState extends State<CreditCardHtk>
       colorGradentTwo: widget.colorGradentTwo,
       colorGradientOne: widget.colorGradientOne,
       textDateSecurityCodeBackCard: widget.textDateSecurityCodeBackCard,
-      textDateBackCard:  widget.textDateBackCard,
+      textDateBackCard: widget.textDateBackCard,
       imageCard: _imageCard,
       textCvv: _textCvv.isEmpty || _controllerCVV == null
           ? CreditCardText.TEXT_DEFAULT_CVV
