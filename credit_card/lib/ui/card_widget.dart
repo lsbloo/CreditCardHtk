@@ -1,3 +1,5 @@
+
+import 'package:credit_card/core/utils/validators/masked_text.dart';
 import 'package:credit_card/ui/widgets.dart';
 import 'package:credit_card/core/base/credit_card_htk.dart';
 import 'package:credit_card/core/enums/enums_credit_card.dart';
@@ -211,16 +213,16 @@ class _CreditCardHtkState extends State<CreditCardHtk>
                     children: [
                       Container(
                         width: 200,
-                        child: TextField(
-                          controller: _controllerDateExpire,
-                          inputFormatters: [
-                            WhitelistingTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(5),
-                          ],
-                          maxLines: 1,
+                        child: new MaskedTextField(
+                          maskedTextFieldController: _controllerDateExpire,
+                          mask: "xx/xx",
                           maxLength: 5,
-                          decoration: InputDecoration(
+                          inputDecoration: InputDecoration(
                               labelText: widget.labelDateCard,
+                              suffixIcon: _controllerDateExpire.text.isEmpty ? null : IconButton(
+                                onPressed: _controllerDateExpire.clear,
+                                icon: Icon(Icons.clear),
+                              ),
                               labelStyle: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.normal,
@@ -238,7 +240,7 @@ class _CreditCardHtkState extends State<CreditCardHtk>
                           child: TextField(
                             controller: _controllerCVV,
                             inputFormatters: [
-                              WhitelistingTextInputFormatter.digitsOnly
+                              WhitelistingTextInputFormatter.digitsOnly,
                             ],
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
