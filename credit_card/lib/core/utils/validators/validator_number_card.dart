@@ -42,4 +42,15 @@ class ValidatorInput implements CreditCardHtkActionInputValidator {
     }
     return cardType;
   }
+
+   static bool validatorPressedButtonInput(String numberCard, String nameCard, String dateCard,
+      String cvv, {String cpf}){
+    if( ( numberCard.isEmpty || nameCard.isEmpty || dateCard.isEmpty || cvv.isEmpty )) {
+      return false;
+    } else if (( numberCard.isEmpty || nameCard.isEmpty || dateCard.isEmpty || cvv.isEmpty ) && (cpf != null) && (cpf.isEmpty)) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }
