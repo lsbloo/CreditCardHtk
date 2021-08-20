@@ -7,6 +7,8 @@ abstract class CreditCardHtkAction {
 
   void onChangeDateExpire();
 
+  void onChangeCVV();
+
   void onChangeImageCard(CardType type);
 
   void onSetupControllersInput();

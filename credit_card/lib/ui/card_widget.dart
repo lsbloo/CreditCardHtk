@@ -7,7 +7,6 @@ import 'package:credit_card/core/utils/validators/validator_number_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
 class CreditCardHtk extends StatefulWidget {
   final String labelTextNumberCard;
@@ -26,32 +25,38 @@ class CreditCardHtk extends StatefulWidget {
   final Text textValidatorFields;
   final String textButtonValidatorFields;
   final Widget customFailureSnackBar;
+  final String textDateBackCard;
+  final String textDateSecurityCodeBackCard;
   final Function(String numberCard, String nameCard, String dateCard,
       String cvv, String cpf) onPressedButton;
 
-  CreditCardHtk({@required this.labelTextNumberCard,
-    @required this.labelTextNameCard,
-    @required this.labelDateCard,
-    @required this.labelCvv,
-    @required this.colorGradentTwo,
-    @required this.colorGradientOne,
-    @required this.onPressedButton,
-    @required this.enableCpf,
-    @required this.labelPressedButton,
-    @required this.colorPressedButton,
-    @required this.textValidatorFields,
-    @required this.textButtonValidatorFields,
-    this.customFailureSnackBar,
-    this.dialogInvalidNumberCard,
-    this.labelCPF,
-    this.textContentDefaultSnackBarFailure,
-    this.textActionDefaultSnackBarFailure});
+  CreditCardHtk(
+      {@required this.labelTextNumberCard,
+      @required this.labelTextNameCard,
+      @required this.textDateBackCard,
+      @required this.textDateSecurityCodeBackCard,
+      @required this.labelDateCard,
+      @required this.labelCvv,
+      @required this.colorGradentTwo,
+      @required this.colorGradientOne,
+      @required this.onPressedButton,
+      @required this.enableCpf,
+      @required this.labelPressedButton,
+      @required this.colorPressedButton,
+      @required this.textValidatorFields,
+      @required this.textButtonValidatorFields,
+      this.customFailureSnackBar,
+      this.dialogInvalidNumberCard,
+      this.labelCPF,
+      this.textContentDefaultSnackBarFailure,
+      this.textActionDefaultSnackBarFailure});
 
   @override
   _CreditCardHtkState createState() => _CreditCardHtkState();
 }
 
 class _CreditCardHtkState extends State<CreditCardHtk>
+    with TickerProviderStateMixin
     implements CreditCardHtkAction {
   TextEditingController _controllerNumberCard;
   TextEditingController _controllerNameCard;
@@ -64,6 +69,8 @@ class _CreditCardHtkState extends State<CreditCardHtk>
   Widget _imageCard;
   String _textCardHolder = CreditCardText.TEXT_DEFAULT_CARD_HOLDER;
   String _textDateCard = CreditCardText.TEXT_DATE_CARD;
+  String _textCvv = CreditCardText.TEXT_DEFAULT_CVV;
+  int indexAnimated = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -73,105 +80,18 @@ class _CreditCardHtkState extends State<CreditCardHtk>
       top: true,
       bottom: true,
       child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: SingleChildScrollView(
           child: Column(children: [
             Padding(
               padding: EdgeInsets.all(10),
-              child: Container(
-                  height: 230,
-                  width: 400,
-                  child: Card(
-                    elevation: 10,
-                    shadowColor: widget.colorGradientOne != null
-                        ? widget.colorGradientOne
-                        : CreditCardColor.greySemiBold,
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                            color: widget.colorGradentTwo != null
-                                ? widget.colorGradentTwo
-                                : CreditCardColor.qreyBold,
-                            width: 1),
-                        borderRadius: BorderRadius.circular(14.0)),
-                    child: SizedBox(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(14.0),
-                            gradient: LinearGradient(
-                                begin: Alignment.topRight,
-                                end: Alignment.bottomLeft,
-                                colors: [
-                                  widget.colorGradientOne != null
-                                      ? widget.colorGradientOne
-                                      : CreditCardColor.greySemiBold,
-                                  widget.colorGradentTwo != null
-                                      ? widget.colorGradentTwo
-                                      : CreditCardColor.qreyBold
-                                ])),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left:
-                                    MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width - 80,
-                                    top: 20),
-                                child: _imageCard == null
-                                    ? Container(
-                                  height: 40,
-                                )
-                                    : _imageCard),
-                            Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      _textNumberCard.isEmpty ||
-                                          _controllerNumberCard == null
-                                          ? _textInitalValueNumberCard
-                                          : _textNumberCard,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 28.0,
-                                          letterSpacing: 2,
-                                          fontFamily: 'Tajawal',
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    SizedBox(
-                                      height: 16,
-                                    ),
-                                    Text(_textDateCard,
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 28.0,
-                                            letterSpacing: 2,
-                                            fontFamily: 'Tajawal',
-                                            fontWeight: FontWeight.w500)),
-                                    SizedBox(
-                                      height: 24,
-                                    ),
-                                    AutoSizeText(_textCardHolder,
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 28.0,
-                                            letterSpacing: 2,
-                                            fontFamily: 'Tajawal',
-                                            fontWeight: FontWeight.w500))
-                                  ]),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )),
+              child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 270,
+                  child: indexAnimated % 2 == 0
+                      ? _makePage(context, 0)
+                      : _makePage(context, 1)),
             ),
             SizedBox(
               height: 10,
@@ -189,6 +109,9 @@ class _CreditCardHtkState extends State<CreditCardHtk>
                     controller: _controllerNumberCard,
                     maxLines: 1,
                     obscureText: true,
+                    onTap: () {
+                      _animateFirstCard();
+                    },
                     decoration: InputDecoration(
                         labelText: widget.labelTextNumberCard,
                         labelStyle: TextStyle(
@@ -206,6 +129,9 @@ class _CreditCardHtkState extends State<CreditCardHtk>
                   TextField(
                     keyboardType: TextInputType.name,
                     controller: _controllerNameCard,
+                    onTap: () {
+                      _animateFirstCard();
+                    },
                     decoration: InputDecoration(
                         labelText: widget.labelTextNameCard,
                         errorText: onChangeCardHolder(),
@@ -229,14 +155,17 @@ class _CreditCardHtkState extends State<CreditCardHtk>
                           maskedTextFieldController: _controllerDateExpire,
                           mask: "xx/xx",
                           maxLength: 5,
+                          onTap: () {
+                            _animateFirstCard();
+                          },
                           inputDecoration: InputDecoration(
                               labelText: widget.labelDateCard,
                               suffixIcon: _controllerDateExpire.text.isEmpty
                                   ? null
                                   : IconButton(
-                                onPressed: _controllerDateExpire.clear,
-                                icon: Icon(Icons.clear),
-                              ),
+                                      onPressed: _controllerDateExpire.clear,
+                                      icon: Icon(Icons.clear),
+                                    ),
                               labelStyle: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.normal,
@@ -248,14 +177,37 @@ class _CreditCardHtkState extends State<CreditCardHtk>
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 40),
+                        padding: EdgeInsets.only(left: 40, bottom: 20),
                         child: Container(
                           width: 130,
                           child: TextField(
                             controller: _controllerCVV,
                             inputFormatters: [
                               WhitelistingTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(3)
                             ],
+                            onTap: () {
+                              if (_textNumberCard.length >= 16) {
+                                _animateSecondCard();
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(FailureSnackBar(
+                                    Text(widget.textContentDefaultSnackBarFailure !=
+                                            null
+                                        ? widget
+                                            .textContentDefaultSnackBarFailure
+                                        : CreditCardText
+                                            .TEXT_CONTENT_SNACK_BAR_FAILURE),
+                                    () {
+                                  onClearNumberCard();
+                                },
+                                    widget.textActionDefaultSnackBarFailure !=
+                                            null
+                                        ? widget
+                                            .textActionDefaultSnackBarFailure
+                                        : CreditCardText
+                                            .TEXT_ACTION_SNACK_BAR_FAILURE));
+                              }
+                            },
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                                 labelText: widget.labelCvv,
@@ -277,9 +229,12 @@ class _CreditCardHtkState extends State<CreditCardHtk>
                   ),
                   Visibility(
                     visible: widget.enableCpf,
-                    child: TextField(
-                      controller: _controllerCpf,
-                      decoration: InputDecoration(
+                    child: MaskedTextField(
+                      maskedTextFieldController: _controllerCpf,
+                      mask: "xxx.xxx.xxx-xx",
+                      maxLength: 14,
+                      keyboardType: TextInputType.number,
+                      inputDecoration: InputDecoration(
                           labelText: widget.labelCPF,
                           labelStyle: TextStyle(
                               color: Colors.black,
@@ -331,6 +286,10 @@ class _CreditCardHtkState extends State<CreditCardHtk>
     _controllerDateExpire.addListener(() {
       onChangeDateExpire();
     });
+
+    _controllerCVV.addListener(() {
+      onChangeCVV();
+    });
   }
 
   @override
@@ -342,9 +301,7 @@ class _CreditCardHtkState extends State<CreditCardHtk>
   @override
   String onChangeCardHolder() {
     setState(() {
-      _textCardHolder = _controllerNameCard.text
-          .toString()
-          .length != 0
+      _textCardHolder = _controllerNameCard.text.toString().length != 0
           ? _controllerNameCard.text
           : CreditCardText.TEXT_DEFAULT_CARD_HOLDER;
     });
@@ -354,9 +311,7 @@ class _CreditCardHtkState extends State<CreditCardHtk>
   @override
   void onChangeDateExpire() {
     setState(() {
-      _textDateCard = _controllerDateExpire.text
-          .toString()
-          .length != 0
+      _textDateCard = _controllerDateExpire.text.toString().length != 0
           ? _controllerDateExpire.text
           : CreditCardText.TEXT_DATE_CARD;
     });
@@ -469,16 +424,16 @@ class _CreditCardHtkState extends State<CreditCardHtk>
     try {
       bool resultValidator = widget.enableCpf
           ? ValidatorInput.validatorPressedButtonInput(
-          _controllerNumberCard.text,
-          _controllerNameCard.text,
-          _controllerDateExpire.text,
-          _controllerCVV.text,
-          cpf: _controllerCpf.text)
+              _controllerNumberCard.text,
+              _controllerNameCard.text,
+              _controllerDateExpire.text,
+              _controllerCVV.text,
+              cpf: _controllerCpf.text)
           : ValidatorInput.validatorPressedButtonInput(
-          _controllerNumberCard.text,
-          _controllerNameCard.text,
-          _controllerDateExpire.text,
-          _controllerCVV.text);
+              _controllerNumberCard.text,
+              _controllerNameCard.text,
+              _controllerDateExpire.text,
+              _controllerCVV.text);
 
       if (resultValidator) {
         widget.onPressedButton(
@@ -495,6 +450,37 @@ class _CreditCardHtkState extends State<CreditCardHtk>
     }
   }
 
+  Widget _makePage(BuildContext context, int itemIndex) {
+    List<Widget> components = new List();
+    components.add(FirstCard(
+        colorGradientOne: widget.colorGradientOne,
+        colorGradentTwo: widget.colorGradentTwo,
+        imageCard: _imageCard,
+        textDateCard: _textDateCard,
+        textNumberCard: _textNumberCard.isEmpty || _controllerNumberCard == null
+            ? _textInitalValueNumberCard
+            : _textNumberCard,
+        textCardHolder: _textCardHolder));
+    components.add(SecondCard(
+      colorGradentTwo: widget.colorGradentTwo,
+      colorGradientOne: widget.colorGradientOne,
+      textDateSecurityCodeBackCard: widget.textDateSecurityCodeBackCard,
+      textDateBackCard: widget.textDateBackCard,
+      imageCard: _imageCard,
+      textCvv: _textCvv.isEmpty || _controllerCVV == null
+          ? CreditCardText.TEXT_DEFAULT_CVV
+          : _textCvv,
+      textCardNumber: _textNumberCard,
+      textDate: _textDateCard,
+    ));
+
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 270,
+      child: components[itemIndex],
+    );
+  }
+
   void _clearDate() {
     setState(() {
       _controllerNumberCard.clear();
@@ -505,9 +491,30 @@ class _CreditCardHtkState extends State<CreditCardHtk>
     });
   }
 
-  Widget _showFailureSnackBar(){
-    return widget.customFailureSnackBar != null ?  widget.customFailureSnackBar : FailureSnackBar(widget.textValidatorFields, () {
-      _clearDate();
-    }, widget.textButtonValidatorFields);
+  Widget _showFailureSnackBar() {
+    return widget.customFailureSnackBar != null
+        ? widget.customFailureSnackBar
+        : FailureSnackBar(widget.textValidatorFields, () {
+            _clearDate();
+          }, widget.textButtonValidatorFields);
+  }
+
+  void _animateSecondCard() {
+    setState(() {
+      indexAnimated = 1;
+    });
+  }
+
+  void _animateFirstCard() {
+    setState(() {
+      indexAnimated = 0;
+    });
+  }
+
+  @override
+  void onChangeCVV() {
+    setState(() {
+      _textCvv = _controllerCVV.text;
+    });
   }
 }

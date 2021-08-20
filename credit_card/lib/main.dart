@@ -27,16 +27,21 @@ class MyApp extends StatelessWidget {
             labelTextNameCard: "Nome do cartão",
             labelTextNumberCard: "Número do cartão",
             labelCPF: "Cpf do Titular",
+            textDateBackCard: "VALID\nTHRU",
+            textDateSecurityCodeBackCard: "SECURITY\nCODE",
             enableCpf: false,
             labelPressedButton: Text("Salvar"),
             colorPressedButton: Colors.green,
-            textValidatorFields: Text("Preencha os dados!"),
+            textValidatorFields: Text("Preencha os dados corretamente!"),
             textButtonValidatorFields: "Limpar",
             colorGradentTwo: CreditCardColor.qreyBold,
             colorGradientOne: CreditCardColor.greySemiBold,
             onPressedButton: (numberCard,nameCard,dateCard,cvv,cpf){
               print(numberCard);
-
+              print(nameCard);
+              print(dateCard);
+              print(cvv);
+              print(cpf);
             },
           )),
     );
