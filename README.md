@@ -25,6 +25,7 @@ Para utilizar o CreditCardHtk você deve criar uma instancia do mesmo dentro de 
 * As propriedades de cores definem as cores do cartão de credito em forma de gradiente - caso não seja especificado o componente irá utilizar as cores embutidas.
 * As propriedade de Cpf booleana define se é necessario exibir uma caixa de texto para o CPF (todas as mascaras ja estão nas caixas de texto)
 * A propriedade onPressedButton retorna os valores de cada campo digitado;
+* Existem algumas propriedades que não são requeridas para o uso basico do componente, porem voce pode querer utiliza-las se quiser ainda mais customização.
 * O componente ja faz validações quanto ao conteudo dos campos digitados;
 
 * Logo abaixo segue a estrutura de modulos do componente - fique a vontade para customizar a sua vontade ;] 
