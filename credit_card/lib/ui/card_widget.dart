@@ -186,27 +186,11 @@ class _CreditCardHtkState extends State<CreditCardHtk>
                               WhitelistingTextInputFormatter.digitsOnly,
                               LengthLimitingTextInputFormatter(3)
                             ],
+                            onChanged: (param){
+                              _validatePermissionAnimatedCvv();
+                            },
                             onTap: () {
-                              if (_textNumberCard.length >= 16) {
-                                _animateSecondCard();
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(FailureSnackBar(
-                                    Text(widget.textContentDefaultSnackBarFailure !=
-                                            null
-                                        ? widget
-                                            .textContentDefaultSnackBarFailure
-                                        : CreditCardText
-                                            .TEXT_CONTENT_SNACK_BAR_FAILURE),
-                                    () {
-                                  onClearNumberCard();
-                                },
-                                    widget.textActionDefaultSnackBarFailure !=
-                                            null
-                                        ? widget
-                                            .textActionDefaultSnackBarFailure
-                                        : CreditCardText
-                                            .TEXT_ACTION_SNACK_BAR_FAILURE));
-                              }
+                              _validatePermissionAnimatedCvv();
                             },
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
@@ -516,5 +500,28 @@ class _CreditCardHtkState extends State<CreditCardHtk>
     setState(() {
       _textCvv = _controllerCVV.text;
     });
+  }
+
+  void _validatePermissionAnimatedCvv(){
+    if (_textNumberCard.length >= 16) {
+      _animateSecondCard();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(FailureSnackBar(
+          Text(widget.textContentDefaultSnackBarFailure !=
+              null
+              ? widget
+              .textContentDefaultSnackBarFailure
+              : CreditCardText
+              .TEXT_CONTENT_SNACK_BAR_FAILURE),
+              () {
+            onClearNumberCard();
+          },
+          widget.textActionDefaultSnackBarFailure !=
+              null
+              ? widget
+              .textActionDefaultSnackBarFailure
+              : CreditCardText
+              .TEXT_ACTION_SNACK_BAR_FAILURE));
+    }
   }
 }
